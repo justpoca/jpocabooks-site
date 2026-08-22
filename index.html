@@ -20,7 +20,7 @@
 
   nav { background:#5A3E2B; display:flex; align-items:center; justify-content:space-between; padding:12px 18px; position:sticky; top:0; z-index:50; box-shadow:0 2px 14px rgba(60,42,28,.35); }
   .brand-wrap { display:flex; align-items:center; gap:11px; }
-  .logo-badge { width:44px; height:44px; border-radius:50%; object-fit:cover; border:1.5px solid var(--sand); }
+  .logo-badge { width:52px; height:52px; border-radius:50%; object-fit:cover; border:1.5px solid var(--sand); }
   .wordmark { font-family:'Marcellus', serif; color:#F5EBDD; font-size:16px; letter-spacing:3px; }
   .navlinks a { color:var(--sand); text-decoration:none; font-size:12px; letter-spacing:1.5px; margin-left:13px; font-weight:500; }
   .navlinks a:hover, .navlinks a:focus { color:#F5EBDD; }
@@ -65,6 +65,15 @@
   .quill { width:30px; height:30px; margin:0 auto 16px; display:block; }
   .hero h1 { font-family:'Marcellus', serif; font-weight:400; font-size:clamp(30px, 7vw, 50px); line-height:1.15; max-width:660px; margin:0 auto 18px; color:var(--ink); }
   .hero p { font-size:15px; line-height:1.75; max-width:520px; margin:0 auto 28px; color:var(--soft); }
+  .hero-follow { margin-top:26px; display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .hero-follow-label { font-size:12px; letter-spacing:.5px; color:var(--walnut); max-width:340px; line-height:1.5; font-weight:600; }
+  .hero-follow-links { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; }
+  .hero-social { display:inline-flex; align-items:center; gap:6px; color:var(--walnut); text-decoration:none; font-size:12.5px; font-weight:600; letter-spacing:.5px; transition:color .15s ease; }
+  .hero-social:hover { color:var(--honey); }
+  .footer-social { display:flex; justify-content:center; gap:14px; margin-bottom:14px; }
+  .social-btn.foot { background:var(--honey); color:var(--ink); width:40px; height:40px; }
+  .social-btn.foot:hover { background:var(--ivory); }
+  .footer-handle { color:var(--honey); font-size:13px; letter-spacing:2px; margin-bottom:16px; font-weight:600; }
 
   section { padding:52px 18px; background:#F5EBDD; }
   .section-label { font-size:11px; letter-spacing:4px; text-transform:uppercase; color:var(--honey); text-align:center; margin-bottom:8px; font-weight:600; }
@@ -78,6 +87,14 @@
   .p-sub { font-size:13px; font-style:italic; color:var(--muted); margin-bottom:12px; font-family:Georgia, serif; }
   .p-price { font-family:'Marcellus', serif; font-size:25px; color:var(--walnut); margin-bottom:16px; }
   .p-note { font-size:11.5px; color:var(--muted); margin-top:12px; }
+  .book-blurb-preview { text-align:left; margin-top:18px; }
+  .book-blurb-preview > p:first-child { font-family:'Besley',serif; font-weight:700; color:var(--ink); font-size:14px; letter-spacing:.3px; line-height:1.6; margin-bottom:12px; }
+  .blurb-teaser { font-size:13.5px; line-height:1.8; color:var(--soft); font-family:Georgia, serif; margin-bottom:6px; }
+  .blurb-toggle { margin:4px 0 0; background:none; border:none; border-bottom:1.5px solid var(--honey); color:var(--walnut); font-family:'Karla',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:2px; text-transform:uppercase; padding:0 0 3px; cursor:pointer; }
+  .blurb-toggle:hover { color:var(--honey); }
+  .book-blurb-rest { max-height:0; overflow:hidden; transition:max-height .5s ease; }
+  .book-blurb-rest.open { max-height:1600px; margin-top:14px; }
+  .book-blurb-rest p { font-size:13.5px; line-height:1.8; color:var(--soft); margin-bottom:12px; font-family:Georgia, serif; }
 
   .coming { background:#5A3E2B; }
   .coming .section-label { color:var(--sand); }
@@ -106,12 +123,35 @@
   .about-inner { max-width:640px; margin:0 auto; text-align:center; }
   .about-blurb { background:#F5EBDD; border:1px dashed var(--honey); border-radius:12px; padding:30px 24px; font-style:italic; color:var(--muted); font-size:14.5px; line-height:1.75; font-family:Georgia, serif; }
 
-  .email-band { background:#F5EBDD; text-align:center; }
-  .email-band .section-title { margin-bottom:12px; }
-  .email-band p { max-width:480px; margin:0 auto 24px; font-size:14.5px; line-height:1.75; color:var(--soft); }
+  .email-band { background:var(--honey); text-align:center; }
+  .email-band .section-label { color:var(--walnut-deep); }
+  .email-band .section-title { margin-bottom:12px; color:var(--walnut-deep); }
+  .email-band p { max-width:480px; margin:0 auto 24px; font-size:14.5px; line-height:1.75; color:var(--walnut-deep); }
   .email-form { display:flex; gap:10px; max-width:440px; margin:0 auto; flex-wrap:wrap; justify-content:center; }
-  .email-form input { flex:1 1 220px; padding:14px 16px; border:1.5px solid var(--walnut); border-radius:0; background:var(--card); font-family:'Karla', sans-serif; font-size:14px; color:var(--ink); }
-  .email-form input:focus { outline:2px solid var(--honey); }
+  .email-form input { flex:1 1 220px; padding:14px 16px; border:1.5px solid var(--walnut-deep); border-radius:0; background:var(--ivory); font-family:'Karla', sans-serif; font-size:14px; color:var(--ink); }
+  .email-form input:focus { outline:2px solid var(--walnut-deep); }
+  .email-band #mlSignup { background:var(--walnut-deep); color:var(--ivory); border-bottom:3px solid var(--ink); animation:shakePop 2.6s ease-in-out infinite; transform-origin:center; }
+  .email-band #mlSignup:hover { animation:none; }
+  .email-band #mlMsg { color:var(--walnut-deep) !important; font-weight:600; }
+  @keyframes shakePop {
+    0%,72%,100% { transform:scale(1) rotate(0deg); }
+    76% { transform:scale(1.06) rotate(-2deg); }
+    80% { transform:scale(1.06) rotate(2deg); }
+    84% { transform:scale(1.06) rotate(-2deg); }
+    88% { transform:scale(1.06) rotate(2deg); }
+    92% { transform:scale(1.03) rotate(0deg); }
+  }
+  /* Heading pop-in when scrolled into view */
+  .email-band .section-label, .email-band .section-title { opacity:0; }
+  .email-band.in-view .section-label { animation:popRise .9s cubic-bezier(.18,.9,.32,1.35) forwards; }
+  .email-band.in-view .section-title { animation:popRise 1.05s .15s cubic-bezier(.18,.9,.32,1.35) forwards; }
+  @keyframes popRise {
+    0% { opacity:0; transform:translateY(40px) scale(.6); }
+    45% { opacity:1; transform:translateY(-10px) scale(1.18); }
+    65% { transform:translateY(4px) scale(.96); }
+    80% { transform:translateY(-3px) scale(1.06); }
+    100% { opacity:1; transform:translateY(0) scale(1); }
+  }
 
   .contact { background:var(--card); }
   .contact-form { max-width:560px; margin:0 auto; }
@@ -137,7 +177,6 @@
   <div class="navlinks">
     <a href="#shop">Shop</a>
     <a href="#reviews">Reviews</a>
-    <a href="#about">About</a>
     <a href="#contact">Contact</a>
     <button class="cart-btn" id="cartBtn" aria-label="Open cart">
       <svg viewBox="0 0 24 24" fill="none" stroke="#EAD9BF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
@@ -151,6 +190,13 @@
   <h1>Find your next book obsession.</h1>
   <p>Welcome to J. POCA Books. I write stories that keep you up past your bedtime and characters that follow you after the last page. I'm starting with urban street fiction, but J. POCA Books will grow into different genres, with more books already on the way. Throne Code, book one of the series, is out now. Browse around and claim your copy.</p>
   <a class="btn" href="#shop">Shop Books</a>
+  <div class="hero-follow">
+    <span class="hero-follow-label">Follow for sneak peeks of upcoming books, cinematic book trailers &amp; raffles</span>
+    <div class="hero-follow-links">
+      <a href="https://www.instagram.com/jpocabooks" target="_blank" rel="noopener" class="hero-social"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s0 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s0-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.62c-3.15 0-3.52.01-4.76.07-1.15.05-1.77.24-2.19.4-.55.22-.94.47-1.35.88-.41.41-.66.8-.88 1.35-.16.42-.35 1.04-.4 2.19-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05 1.15.24 1.77.4 2.19.22.55.47.94.88 1.35.41.41.8.66 1.35.88.42.16 1.04.35 2.19.4 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c1.15-.05 1.77-.24 2.19-.4.55-.22.94-.47 1.35-.88.41-.41.66-.8.88-1.35.16-.42.35-1.04.4-2.19.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-1.15-.24-1.77-.4-2.19a3.6 3.6 0 0 0-.88-1.35 3.6 3.6 0 0 0-1.35-.88c-.42-.16-1.04-.35-2.19-.4-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.42 5.42 0 1 1 0 10.84 5.42 5.42 0 0 1 0-10.84zm0 8.94a3.52 3.52 0 1 0 0-7.04 3.52 3.52 0 0 0 0 7.04zm6.9-9.15a1.27 1.27 0 1 1-2.54 0 1.27 1.27 0 0 1 2.54 0z"/></svg><span>@jpocabooks</span></a>
+      <a href="https://www.tiktok.com/@jpocabooks" target="_blank" rel="noopener" class="hero-social"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M16.6 5.82a4.28 4.28 0 0 1-1.06-2.82h-3.1v12.4a2.6 2.6 0 0 1-2.6 2.5 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 3.4-2.48V9.65a5.7 5.7 0 0 0-.8-.06 5.7 5.7 0 1 0 5.7 5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.28 4.28 0 0 1-3.24-1.48z"/></svg><span>@jpocabooks</span></a>
+    </div>
+  </div>
 </div>
 
 <section id="shop">
@@ -167,6 +213,7 @@
       <button class="btn add-btn" data-id="throne-paperback" data-title="Throne Code" data-fmt="Paperback" data-price="18.99" data-ship="1">Add Paperback &mdash; $18.99</button>
       <button class="btn btn-paypal add-btn" data-id="throne-ebook" data-title="Throne Code" data-fmt="Ebook" data-price="10.99" data-ship="0">Add Ebook &mdash; $10.99</button>
       <div class="p-note">Paperback ships to your door. Ebook is delivered instantly through BookFunnel.</div>
+      <div class="book-blurb-preview"><p>IN A WORLD OF KINGS AND PAWNS, ZEE AND SEYON DON'T PLAY THE GAME. THEY ARE THE GAME.</p><p class="blurb-teaser">Azimora "Zee" Steven is the daughter of one of the most powerful men the underworld has ever seen. Her husband, Seyon Dravone, is the heir to a bloodline with roots darker and deeper that operates in places the underworld doesn't even have access to. After the death of Zee's father,</p><div class="book-blurb-rest"><p>they inherited a global empire that keeps the most powerful people in the world on a leash. Nothing comes or moves without their say so.</p><p>Zee and Seyon come from two families that were never supposed to mix. The beef between their fathers goes back to when they were too young to remember. And they have been living in the middle of it their entire lives without knowing. Meanwhile the deep and dangerous parts have been waiting on them ever since.</p><p>As they work to take full control of the operation, someone in their bloodline has been running a different game behind their backs for years. Secrets start surfacing on both sides of the family. Some were hidden to protect. Others were hidden for revenge. The cost of all of it comes down to setups that ruin lives and bodies that fall.</p><p>What comes to light brings Zee and Seyon closer in some ways and threatens to destroy them in others, forcing one of them into a decision that could protect the people they love and tear down what they built together.</p></div><button class="blurb-toggle" onclick="var w=this.previousElementSibling;var open=w.classList.toggle('open');this.textContent=open?'See Less':'See More';">See More</button></div>
     </div>
 
   </div>
@@ -230,16 +277,6 @@
   </form>
 </section>
 
-<section class="about" id="about">
-  <div class="about-inner">
-    <div class="section-label">About</div>
-    <h2 class="section-title">About The Book</h2>
-    <div class="about-blurb">
-      The blurb lands here when you send it. This box is holding the spot so nothing on the page moves when the real words arrive.
-    </div>
-  </div>
-</section>
-
 <section class="email-band">
   <div class="section-label">Stay In The Loop</div>
   <h2 class="section-title">Join The Reader List</h2>
@@ -278,6 +315,7 @@
     <div class="field">
       <label>Topic</label>
       <select name="topic">
+        <option value="" selected disabled>Choose one</option>
         <option>Missing order</option>
         <option>Damaged order</option>
         <option>Ebook issue</option>
@@ -294,6 +332,11 @@
 </section>
 
 <footer>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/jpocabooks" target="_blank" rel="noopener" aria-label="Instagram" class="social-btn foot"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s0 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s0-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.62c-3.15 0-3.52.01-4.76.07-1.15.05-1.77.24-2.19.4-.55.22-.94.47-1.35.88-.41.41-.66.8-.88 1.35-.16.42-.35 1.04-.4 2.19-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05 1.15.24 1.77.4 2.19.22.55.47.94.88 1.35.41.41.8.66 1.35.88.42.16 1.04.35 2.19.4 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c1.15-.05 1.77-.24 2.19-.4.55-.22.94-.47 1.35-.88.41-.41.66-.8.88-1.35.16-.42.35-1.04.4-2.19.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-1.15-.24-1.77-.4-2.19a3.6 3.6 0 0 0-.88-1.35 3.6 3.6 0 0 0-1.35-.88c-.42-.16-1.04-.35-2.19-.4-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.42 5.42 0 1 1 0 10.84 5.42 5.42 0 0 1 0-10.84zm0 8.94a3.52 3.52 0 1 0 0-7.04 3.52 3.52 0 0 0 0 7.04zm6.9-9.15a1.27 1.27 0 1 1-2.54 0 1.27 1.27 0 0 1 2.54 0z"/></svg></a>
+    <a href="https://www.tiktok.com/@jpocabooks" target="_blank" rel="noopener" aria-label="TikTok" class="social-btn foot"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M16.6 5.82a4.28 4.28 0 0 1-1.06-2.82h-3.1v12.4a2.6 2.6 0 0 1-2.6 2.5 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 3.4-2.48V9.65a5.7 5.7 0 0 0-.8-.06 5.7 5.7 0 1 0 5.7 5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.28 4.28 0 0 1-3.24-1.48z"/></svg></a>
+  </div>
+  <div class="footer-handle">@jpocabooks</div>
   <span class="wordmark">J. POCA BOOKS</span>
   <svg class="quill" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.5 3.5c-5.5.5-10 3-12.5 6.5-1.8 2.5-2.6 5.4-2.9 8.2l-1.6 2.3c-.2.3.2.7.5.5l2.3-1.6c2.8-.3 5.7-1.1 8.2-2.9 3.5-2.5 6-7 6.5-12.5.05-.3-.2-.55-.5-.5zM8 16c2-4.5 5.5-7.5 9.5-9-1.5 4-4.5 7.5-9 9.5l-.5-.5z" fill="#C98F4E"/></svg>
   <p>&copy; 2026 J. POCA Books. All rights reserved.</p>
@@ -508,6 +551,19 @@
         input.value=''; btn.textContent='Sign Me Up'; btn.disabled=false;
       });
     });
+  })();
+</script>
+<script>
+  (function(){
+    var band = document.querySelector('.email-band');
+    if(!band) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ band.classList.add('in-view'); }
+        else { band.classList.remove('in-view'); }
+      });
+    }, { threshold:0.4 });
+    io.observe(band);
   })();
 </script>
 </body>
