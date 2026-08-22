@@ -4,6 +4,12 @@
 
 const Stripe = require('stripe');
 
+// Books that must ring up as a REAL Stripe product (so BookFunnel delivers them).
+// Map the cart item id to its Stripe Price ID.
+const STRIPE_PRICE_IDS = {
+  'throne-ebook': 'price_1U6ylfFCa8EJmEXrnBOsGNCr'
+};
+
 exports.handler = async function (event) {
   // Only accept POST
   if (event.httpMethod !== 'POST') {
@@ -18,8 +24,16 @@ exports.handler = async function (event) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Cart is empty' }) };
     }
 
-    // Build one Stripe line for each book in the cart
+    // Build one Stripe line for each book in the cart.
+    // If the item has a real Stripe Price ID, use it (BookFunnel watches these).
+    // Otherwise build the price on the fly like before.
     const line_items = items.map(function (it) {
+      if (STRIPE_PRICE_IDS[it.id]) {
+        return {
+          price: STRIPE_PRICE_IDS[it.id],
+          quantity: it.qty
+        };
+      }
       return {
         price_data: {
           currency: 'usd',
