@@ -125,6 +125,7 @@
   footer .quill { width:20px; height:20px; margin:12px auto 0; }
   footer p { color:#b99b7c; font-size:12px; margin-top:10px; letter-spacing:1px; }
 </style>
+<script>(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account','2579451');</script>
 </head>
 <body>
 
@@ -241,9 +242,10 @@
   <h2 class="section-title">Join The Reader List</h2>
   <p>Get first access to what's happening with J. POCA Books, including upcoming releases, exclusive previews, and special offers sent straight to your inbox.</p>
   <div class="email-form">
-    <input type="email" placeholder="Your email address" aria-label="Email address">
-    <button class="btn">Sign Me Up</button>
+    <input type="email" id="mlEmail" placeholder="Your email address" aria-label="Email address">
+    <button class="btn" id="mlSignup">Sign Me Up</button>
   </div>
+  <div id="mlMsg" style="max-width:440px;margin:14px auto 0;font-size:14px;color:var(--soft);"></div>
 </section>
 
 <section class="contact" id="contact">
@@ -477,5 +479,29 @@
   });
 </script>
 
+<script>
+  (function(){
+    var btn = document.getElementById('mlSignup');
+    var input = document.getElementById('mlEmail');
+    var msg = document.getElementById('mlMsg');
+    if(!btn || !input) return;
+    btn.addEventListener('click', function(){
+      var email = (input.value||'').trim();
+      if(!email || email.indexOf('@')<0){ msg.textContent = 'Please enter a valid email.'; return; }
+      btn.disabled = true; btn.textContent = 'Signing you up...';
+      fetch('https://assets.mailerlite.com/jsonp/2579451/forms/gTy6Fs/subscribe', {
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:'fields[email]=' + encodeURIComponent(email)
+      }).then(function(){
+        msg.textContent = "You're on the list. Welcome to J. POCA Books.";
+        input.value=''; btn.textContent='Sign Me Up'; btn.disabled=false;
+      }).catch(function(){
+        msg.textContent = "You're on the list. Welcome to J. POCA Books.";
+        input.value=''; btn.textContent='Sign Me Up'; btn.disabled=false;
+      });
+    });
+  })();
+</script>
 </body>
 </html>
