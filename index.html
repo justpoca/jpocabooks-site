@@ -352,8 +352,48 @@
       + '<div class="cart-total"><span>Total</span><span>'+money(c.total)+'</span></div>'
       + '<div class="cart-ship-note">'+(c.hasPaper?'Flat $5.99 shipping per order.':'Ebooks only \u2014 no shipping.')+'</div>'
       + '<button class="btn cart-checkout" id="checkoutStripe">Checkout with Card</button>'
-      + '<button class="btn cart-checkout paypal" id="checkoutPaypal">Checkout with PayPal</button>';
+      + '<div id="paypalContainer" style="margin-top:4px;"></div>';
     saveCart();
+    renderPayPalButton();
+  }
+
+  var paypalReady = false;
+  function renderPayPalButton(){
+    var container = document.getElementById('paypalContainer');
+    if(!container || !window.paypal || cart.length===0) return;
+    container.innerHTML = '';
+    window.paypal.Buttons({
+      style: { color:'gold', shape:'rect', label:'paypal', height:45 },
+      createOrder: function(){
+        return fetch('/.netlify/functions/paypal', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ action:'create', items: cart })
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(data){ return data.id; });
+      },
+      onApprove: function(data){
+        return fetch('/.netlify/functions/paypal', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ action:'capture', orderID: data.orderID })
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(details){
+          if(details.status==='COMPLETED'){
+            cart = [];
+            saveCart();
+            window.location = '/?paid=1';
+          } else {
+            alert('Payment could not be completed. Please try again.');
+          }
+        });
+      },
+      onError: function(){
+        alert('Something went wrong with PayPal. Please try again or use card.');
+      }
+    }).render('#paypalContainer');
   }
 
   function addToCart(item){
@@ -410,11 +450,17 @@
       })
       .catch(function(){ alert('Something went wrong starting checkout. Please try again.'); btn.textContent='Checkout with Card'; btn.disabled=false; });
     }
-    else if(e.target.id==='checkoutPaypal'){
-      var c = cartCounts();
-      alert('PayPal checkout is being connected next. Your total is '+money(c.total)+'.');
-    }
   });
+
+  // Load PayPal SDK, then render cart. Client ID is public (safe in page).
+  var PAYPAL_CLIENT_ID = 'BAAgy0tt1fPiwpnmBzgOFNquUAQq8fj1n0EpwgjaS4aQOm9Md7tXMd-edZR_x8QNQdX1kR2bqotOJXKvdE';
+  (function loadPayPal(){
+    if(PAYPAL_CLIENT_ID === 'PAYPAL_CLIENT_ID_HERE') return; // not set yet
+    var s = document.createElement('script');
+    s.src = 'https://www.paypal.com/sdk/js?client-id=' + PAYPAL_CLIENT_ID + '&currency=USD';
+    s.onload = function(){ paypalReady = true; renderPayPalButton(); };
+    document.head.appendChild(s);
+  })();
 
   renderCart();
 </script>
