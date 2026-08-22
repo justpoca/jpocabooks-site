@@ -201,15 +201,17 @@
     <div class="stars-row">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
     Finished a J. POCA book? Your review can be the first one on this page.
   </div>
-  <div class="review-form">
+  <form class="review-form" name="review" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="review">
+    <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
     <h3>Leave A Review</h3>
     <div class="field">
       <label>Name</label>
-      <input type="text" placeholder="Your name">
+      <input type="text" name="name" placeholder="Your name" required>
     </div>
     <div class="field">
       <label>Book</label>
-      <select>
+      <select name="book">
         <option>Throne Code</option>
       </select>
     </div>
@@ -218,13 +220,14 @@
       <div class="star-pick" id="starPick">
         <span data-v="1">&#9733;</span><span data-v="2">&#9733;</span><span data-v="3">&#9733;</span><span data-v="4">&#9733;</span><span data-v="5">&#9733;</span>
       </div>
+      <input type="hidden" name="rating" id="ratingValue" value="">
     </div>
     <div class="field">
       <label>Your Review</label>
-      <textarea placeholder="What did you think?"></textarea>
+      <textarea name="review" placeholder="What did you think?" required></textarea>
     </div>
-    <button class="btn">Submit Review</button>
-  </div>
+    <button class="btn" type="submit">Submit Review</button>
+  </form>
 </section>
 
 <section class="about" id="about">
@@ -251,28 +254,30 @@
 <section class="contact" id="contact">
   <div class="section-label">Get In Touch</div>
   <h2 class="section-title">Contact</h2>
-  <div class="contact-form">
+  <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="contact">
+    <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
     <div class="form-row">
       <div class="field">
         <label>First Name</label>
-        <input type="text" placeholder="First name">
+        <input type="text" name="first-name" placeholder="First name" required>
       </div>
       <div class="field">
         <label>Last Name</label>
-        <input type="text" placeholder="Last name">
+        <input type="text" name="last-name" placeholder="Last name" required>
       </div>
     </div>
     <div class="field">
       <label>Email</label>
-      <input type="email" placeholder="So I can get back to you">
+      <input type="email" name="email" placeholder="So I can get back to you" required>
     </div>
     <div class="field">
       <label>Order Number <span class="optional">(optional, but it helps)</span></label>
-      <input type="text" placeholder="From your receipt email">
+      <input type="text" name="order-number" placeholder="From your receipt email">
     </div>
     <div class="field">
       <label>Topic</label>
-      <select>
+      <select name="topic">
         <option>Missing order</option>
         <option>Damaged order</option>
         <option>Ebook issue</option>
@@ -281,11 +286,11 @@
     </div>
     <div class="field">
       <label>Message</label>
-      <textarea placeholder="Tell me what's going on"></textarea>
+      <textarea name="message" placeholder="Tell me what's going on" required></textarea>
     </div>
-    <button class="btn">Send Message</button>
+    <button class="btn" type="submit">Send Message</button>
     <div class="contact-email-line">Or email directly: <a href="mailto:support@jpocabooks.com">support@jpocabooks.com</a></div>
-  </div>
+  </form>
 </section>
 
 <footer>
@@ -475,6 +480,8 @@
       stars.forEach(function(x){
         x.classList.toggle('on', parseInt(x.getAttribute('data-v')) <= v);
       });
+      var rv = document.getElementById('ratingValue');
+      if(rv) rv.value = v;
     });
   });
 </script>
