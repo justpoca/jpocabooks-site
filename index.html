@@ -394,9 +394,25 @@
   });
 
   document.getElementById('cartFoot').addEventListener('click', function(e){
-    if(e.target.id==='checkoutStripe' || e.target.id==='checkoutPaypal'){
+    if(e.target.id==='checkoutStripe'){
+      var btn = e.target;
+      btn.textContent = 'Loading...';
+      btn.disabled = true;
+      fetch('/.netlify/functions/checkout', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ items: cart })
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if(data.url){ window.location = data.url; }
+        else { alert('Something went wrong starting checkout. Please try again.'); btn.textContent='Checkout with Card'; btn.disabled=false; }
+      })
+      .catch(function(){ alert('Something went wrong starting checkout. Please try again.'); btn.textContent='Checkout with Card'; btn.disabled=false; });
+    }
+    else if(e.target.id==='checkoutPaypal'){
       var c = cartCounts();
-      alert('Checkout is being connected. Your total is '+money(c.total)+'. Once the payment keys are added, this button will open your real '+(e.target.id==='checkoutPaypal'?'PayPal':'card')+' checkout.');
+      alert('PayPal checkout is being connected next. Your total is '+money(c.total)+'.');
     }
   });
 
