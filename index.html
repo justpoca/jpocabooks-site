@@ -120,6 +120,12 @@
   .cs-grid { grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); max-width:860px; }
   .review-empty { max-width:520px; margin:0 auto 34px; background:var(--card); border:1px solid var(--sand); border-radius:12px; padding:26px 22px; text-align:center; color:var(--muted); font-size:14px; line-height:1.7; }
   .stars-row { color:var(--honey); font-size:22px; letter-spacing:5px; margin-bottom:8px; }
+  .review-list { max-width:720px; margin:0 auto 34px; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:18px; }
+  .review-card { background:var(--card); border:1px solid var(--sand); border-radius:12px; padding:24px 22px; text-align:left; }
+  .review-card .stars-row { font-size:18px; letter-spacing:4px; margin-bottom:10px; }
+  .review-text { font-family:Georgia, serif; font-size:15px; line-height:1.8; color:var(--ink); margin-bottom:14px; }
+  .review-name { font-family:'Besley', serif; font-weight:700; font-size:14px; color:var(--ink); letter-spacing:.3px; }
+  .review-book { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:4px; }
   .review-form { max-width:520px; margin:0 auto; background:var(--card); border:1px solid var(--sand); border-radius:12px; padding:26px 22px; }
   .review-form h3, .contact-form h3 { font-family:'Besley', serif; font-weight:700; font-size:18px; margin-bottom:16px; color:var(--ink); }
   .field { margin-bottom:14px; }
@@ -262,9 +268,13 @@
 <section class="reviews" id="reviews">
   <div class="section-label">Readers Talk</div>
   <h2 class="section-title">Reviews</h2>
-  <div class="review-empty">
-    <div class="stars-row">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-    Finished a J. POCA book? Your review can be the first one on this page.
+  <div class="review-list">
+    <div class="review-card">
+      <div class="stars-row">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="review-text">&#8220;I really love this book&#8221;</p>
+      <div class="review-name">Amyria</div>
+      <div class="review-book">Throne Code</div>
+    </div>
   </div>
   <form class="review-form" name="review" method="POST" action="/thankyou.html" data-netlify="true" netlify-honeypot="bot-field">
     <input type="hidden" name="form-name" value="review">
