@@ -51,6 +51,11 @@ exports.handler = async function (event) {
       const shipping = hasPaper ? 5.99 : 0;
       const grandTotal = itemTotal + shipping;
 
+      // Free Reading Light: its own $0.00 line on every Throne Code paperback order
+      if (items.some(function (it) { return it.id === 'throne-paperback'; })) {
+        paypalItems.push({ name: 'Free Reading Light', quantity: '1', unit_amount: { currency_code: 'USD', value: '0.00' }, category: 'PHYSICAL_GOODS' });
+      }
+
       const order = await fetch(PAYPAL_BASE + '/v2/checkout/orders', {
         method: 'POST',
         headers: {
@@ -72,7 +77,22 @@ exports.handler = async function (event) {
           }]
         })
       });
-      const orderData = await order.json();
+      let orderData = await order.json();
+      if (!orderData.id) {
+        // if PayPal refuses the $0.00 gift line, place the order without it (the gift still ships with the book)
+        const retry = await fetch(PAYPAL_BASE + '/v2/checkout/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+          body: JSON.stringify({
+            intent: 'CAPTURE',
+            purchase_units: [{
+              amount: { currency_code: 'USD', value: grandTotal.toFixed(2), breakdown: { item_total: { currency_code: 'USD', value: itemTotal.toFixed(2) }, shipping: { currency_code: 'USD', value: shipping.toFixed(2) } } },
+              items: paypalItems.filter(function (it) { return it.name !== 'Free Reading Light'; })
+            }]
+          })
+        });
+        orderData = await retry.json();
+      }
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json' },
@@ -90,6 +110,28 @@ exports.handler = async function (event) {
         }
       });
       const capData = await cap.json();
+      if (capData.status === 'COMPLETED') {
+        // purchase notification -> Netlify "purchase" form -> support@ email
+        try {
+          const pu = (capData.purchase_units && capData.purchase_units[0]) || {};
+          const payer = capData.payer || {};
+          const ship = pu.shipping || {};
+          const addr = ship.address || {};
+          const paid = pu.payments && pu.payments.captures && pu.payments.captures[0] ? pu.payments.captures[0].amount : null;
+          const origin = process.env.URL || 'https://jpocabooks.com';
+          const fields = {
+            'form-name': 'purchase',
+            method: 'PayPal',
+            order: capData.id || body.orderID,
+            name: (ship.name && ship.name.full_name) || [payer.name && payer.name.given_name, payer.name && payer.name.surname].filter(Boolean).join(' '),
+            email: payer.email_address || '',
+            items: (body.items || []).map(function (it) { return it.qty + ' x ' + it.title + ' (' + it.fmt + ')'; }).join('; ') || '(see PayPal)',
+            total: paid ? '$' + paid.value + ' ' + paid.currency_code : '',
+            'shipping-address': [addr.address_line_1, addr.address_line_2, addr.admin_area_2, addr.admin_area_1, addr.postal_code, addr.country_code].filter(Boolean).join(', ') || 'Ebook only, no shipping'
+          };
+          await fetch(origin + '/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(fields).toString() });
+        } catch (e) { /* the sale is captured either way */ }
+      }
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json' },
