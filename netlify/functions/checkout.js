@@ -60,13 +60,28 @@ exports.handler = async function (event) {
     const origin =
       (event.headers && (event.headers.origin || 'https://' + event.headers.host)) || '';
 
-    const session = await stripe.checkout.sessions.create({
-      mode: 'payment',
-      line_items: line_items,
-      shipping_address_collection: hasPaper ? { allowed_countries: ['US', 'CA'] } : undefined,
-      success_url: origin + '/?paid=1',
-      cancel_url: origin + '/?canceled=1'
-    });
+    // Free Reading Light: rides on every Throne Code paperback order as its own $0.00 line
+    const hasThrone = items.some(function (it) { return it.id === 'throne-paperback'; });
+    const giftLine = { price_data: { currency: 'usd', product_data: { name: 'Free Reading Light' }, unit_amount: 0 }, quantity: 1 };
+
+    async function makeSession(withGift) {
+      const lines = withGift && hasThrone ? line_items.concat([giftLine]) : line_items;
+      return stripe.checkout.sessions.create({
+        mode: 'payment',
+        line_items: lines,
+        shipping_address_collection: hasPaper ? { allowed_countries: ['US', 'CA'] } : undefined,
+        success_url: origin + '/?paid=1',
+        cancel_url: origin + '/?canceled=1'
+      });
+    }
+
+    let session;
+    try {
+      session = await makeSession(true);
+    } catch (e) {
+      // if Stripe ever refuses the $0 line, the order still goes through; the gift is still shown in the cart and packed with the book
+      session = await makeSession(false);
+    }
 
     return {
       statusCode: 200,
